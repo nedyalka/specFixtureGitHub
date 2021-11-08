@@ -1,0 +1,38 @@
+name: Testspace
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Function name'
+        required: true
+      payload:
+        description: 'Function input-payload'
+        required: true
+      context:
+        description: 'Function execution-context'
+        required: true
+jobs:
+  debugJob:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo example "${{ github.event.inputs.name }}" function call
+          echo example "${{ github.job }}" function call
+          echo with "${{ github.event.inputs.payload }}" payload
+          echo and "${{ github.event.inputs.context }}" context
+  beforeJob:
+    if: github.event.inputs.name == 'beforeJob'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo example "${{ github.job }}" function call
+          echo with "${{ github.event.inputs.payload }}" payload
+          echo and "${{ github.event.inputs.context }}" context
+  afterJob:
+    if: github.event.inputs.name == 'afterJob'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo example "{{ github.job }}" function call
+          echo with "${{ github.event.inputs.payload }}" payload
+          echo and "${{ github.event.inputs.context }}" context
