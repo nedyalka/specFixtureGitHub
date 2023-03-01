@@ -1,7 +1,16 @@
 name: Invalid Workflow
 on
-  repository_dispatch:
-    types: [invalid]
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Function name'
+        required: true
+      payload:
+        description: 'Function input-payload'
+        required: true
+      context:
+        description: 'Function execution-context'
+        required: true
 jobs:
   fixture:
     runs-on: ubuntu-latest
